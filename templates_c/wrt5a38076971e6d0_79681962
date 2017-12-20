@@ -1,0 +1,62 @@
+<?php
+/* Smarty version 3.1.30, created on 2017-12-18 21:22:33
+  from "K:\OpenServer\domains\sppr\templates\index.tpl" */
+
+/* @var Smarty_Internal_Template $_smarty_tpl */
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
+  'version' => '3.1.30',
+  'unifunc' => 'content_5a38076971a662_93420620',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '362ed7191dedfe26d35a92e7dd2ed5fe6a98a4f7' => 
+    array (
+      0 => 'K:\\OpenServer\\domains\\sppr\\templates\\index.tpl',
+      1 => 1513621352,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+  ),
+),false)) {
+function content_5a38076971a662_93420620 (Smarty_Internal_Template $_smarty_tpl) {
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<?php echo '<script'; ?>
+ type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"><?php echo '</script'; ?>
+>
+<link rel="stylesheet" href="templates/css/bootstrap.min.css">
+<?php echo '<script'; ?>
+ src="templates/js/bootstrap.min.js"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ src="templates/js/custom.js"><?php echo '</script'; ?>
+>
+<meta charset="utf-8">
+<title>СППР</title>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+      <div class="col-md-1">
+    Цель: 
+  </div>
+  <div class="col-md-4">
+    <input type="text" name="aim" class="form-control" id="aim">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+    Размер матрицы: 
+    </div>
+    <div class="col-md-4">
+    <input type="number" name="size" id="size" class="form-control" style="width:50px;">
+  </div>
+  </div>
+</div>
+</body>
+</html><?php }
+}
