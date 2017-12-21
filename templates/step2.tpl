@@ -11,7 +11,7 @@
     <table class="table">
         <thead>
           <tr>
-            <td>Критерии</td>
+            <td style="width:{$width}%;">Критерии</td>
             {$td}
           </tr>
         </thead>

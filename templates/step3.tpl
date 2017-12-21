@@ -10,7 +10,7 @@
     <table class="table">
         <thead>
           <tr>
-            <td></td>
+            <td style="width:{$width}%;"></td>
             {$td}
           </tr>
         </thead>

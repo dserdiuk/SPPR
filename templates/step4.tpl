@@ -10,7 +10,7 @@
     <table class="table">
         <thead>
           <tr>
-            <td>Альтернативы</td>
+            <td style="width:{$width}%;">Альтернативы</td>
             {$td}
             <td>Глобальные приоритеты</td>
           </tr>

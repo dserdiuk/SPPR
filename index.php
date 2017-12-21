@@ -1,8 +1,4 @@
 <?php
-// ini_set('error_reporting', E_ALL);
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-//ini_set('error_reporting', 0)
 session_start();
 require 'Smarty.class.php';
 require 'mysqlconf.php';
@@ -10,8 +6,6 @@ $tpl = new Smarty;
 $tpl->debugging = false;
 $tpl->caching = false;
 $tpl->cache_lifetime = 0;
-	// $_SESSION['step'] = 3;
-	// $_SESSION['crit'] = 1;
 if ($_GET['do']=='startagain'){
 	session_destroy();
 	header("Location:/");
@@ -108,12 +102,15 @@ if (isset($_POST['step3'])){
 if (!isset($_SESSION['step_id'])){
 	$step=1;
 }else{
+	$selectstep = $db->select("SELECT step1 FROM steps WHERE id=?",$_SESSION['step_id']);
+	$stepinfo = (array)json_decode($selectstep[0]['step1']);
+	$width = 100/($stepinfo['size']+1);
 	switch($_SESSION['step']){
 		case 2:
 			$selectstep = $db->select("SELECT step1 FROM steps WHERE id=?",$_SESSION['step_id']);
 			$stepinfo = (array)json_decode($selectstep[0]['step1']);
 			for ($s=1;$s<=$stepinfo['size'];$s++){
-				$td.="<td>".$stepinfo['crit'.$s]."</td>";
+				$td.="<td style='width:".$width."%'>".$stepinfo['crit'.$s]."</td>";
 				for ($t=1;$t<=$stepinfo['size'];$t++){
 					if ($t==1){
 						$tr.="<tr><td>".$stepinfo['crit'.$s]."</td>";
@@ -123,7 +120,7 @@ if (!isset($_SESSION['step_id'])){
 					}elseif ($t>$s){
 						$tr .= <<<HTML
 						<td id="{$s}_{$t}">
-						<select name="{$s}_{$t}" id="{$s}_{$t}sel" onchange="changevalue('{$s}_{$t}','{$stepinfo['size']}')" class="form-control" style="width: 120px;">
+						<select name="{$s}_{$t}" id="{$s}_{$t}sel" onchange="changevalue('{$s}_{$t}','{$stepinfo['crit'.$t]}','{$stepinfo['crit'.$s]}')" class="form-control" style="width: 120px;">
 						<option value="1">{$stepinfo['crit'.$t]} равен {$stepinfo['crit'.$s]}</option>
 							<option value="7">{$stepinfo['crit'.$t]} значительно превосходит {$stepinfo['crit'.$s]}</option>
         					<option value="0.142">{$stepinfo['crit'.$s]} значительно превосходит {$stepinfo['crit'.$t]}</option>
@@ -150,7 +147,7 @@ HTML;
 			$selectstep = $db->select("SELECT step1 FROM steps WHERE id=?",$_SESSION['step_id']);
 			$stepinfo = (array)json_decode($selectstep[0]['step1']);
 			for ($s=1;$s<=$stepinfo['size'];$s++){
-				$td.="<td>".$stepinfo['alt'.$s]."</td>";
+				$td.="<td style='width:".$width."%'>".$stepinfo['alt'.$s]."</td>";
 				for ($t=1;$t<=$stepinfo['size'];$t++){
 					if ($t==1){
 						$tr.="<tr><td>".$stepinfo['alt'.$s]."</td>";
@@ -160,7 +157,7 @@ HTML;
 					}elseif ($t>$s){
 						$tr .= <<<HTML
 						<td>
-						<select name="{$s}_{$t}" id="{$s}_{$t}sel" onchange="changevalue('{$s}_{$t}','{$stepinfo['size']}')" class="form-control" style="width: 120px;">
+						<select name="{$s}_{$t}" id="{$s}_{$t}sel" onchange="changevalue('{$s}_{$t}','{$stepinfo['alt'.$t]}','{$stepinfo['alt'.$s]}')" class="form-control" style="width: 100%;">
 						<option value="1">{$stepinfo['alt'.$t]} равен {$stepinfo['alt'.$s]}</option>
 							<option value="7">{$stepinfo['alt'.$t]} значительно превосходит {$stepinfo['alt'.$s]}</option>
 							<option value="0.142">{$stepinfo['alt'.$s]} значительно превосходит {$stepinfo['alt'.$t]}</option>
@@ -203,7 +200,7 @@ HTML;
 			$tpl->assign('alt_name',$alt_name);
 			for ($s=1;$s<=$stepinfo['size'];$s++){
 				
-				$td.="<td>".$stepinfo['crit'.$s]."</td>";
+				$td.="<td style='width:".$width."%'>".$stepinfo['crit'.$s]."</td>";
 				for ($t=1;$t<=$stepinfo['size'];$t++){
 					if ($t==1){
 						$tr.="<tr><td>".$stepinfo['alt'.$s]."</td>";
@@ -226,6 +223,7 @@ HTML;
 	$select = $db->select("SELECT step1 FROM steps WHERE id=?",$_SESSION['step_id']);
 	$stepinf = (array)json_decode($selectstep[0]['step1']);
 	$tpl->assign('aim',$stepinf['aim']);	
+	$tpl->assign('width',$width);
 }
 
 $tpl->display('step'.$step.'.tpl');
